@@ -36,7 +36,7 @@ fi
 wsopts=""
 if [ "$ENABLE_WS" = "true" ]; then
   echo "WebSocket interface enabled."
-  wsopts="--ws true --ws-port ${WS_PORT:-6061} --ws-host ${WS_HOST:-0.0.0.0}"
+  wsopts="--ws --ws-port ${WS_PORT:-6061} --ws-host ${WS_HOST:-0.0.0.0}"
 fi
 
 juno \
