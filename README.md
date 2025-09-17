@@ -27,6 +27,8 @@ Or using the full domain:
 
 ## DappNode configuration
 
+### Node
+
 `NETWORK`: Select the Starknet network to sync (default: "mainnet"). Available options:
 
 - **mainnet**: Mainnet network (~172 GB snapshot)
@@ -46,6 +48,25 @@ Or using the full domain:
 `WS_HOST`: WebSocket server host interface (default: "0.0.0.0"). See [WebSocket Interface](https://juno.nethermind.io/websocket)
 
 `EXTRA_OPTS`: Additional configuration options. See [Configuration options](https://juno.nethermind.io/configuring#configuration-options)
+
+### Validator
+
+> ⚠️ Warning: Do not start the staking container before Juno is fully synced. Otherwise, it will broadcast outdated attestations on the network. To make sure it doesn't attest while syncing, keep the SIGNER_* variables empty until it's ready.
+
+`PROVIDER_HTTP_URL`: The Juno HTTP RPC URL (default `http://juno:6060/rpc/v0_8`)
+
+`PROVIDER_WS_URL`: The Juno Websocket RPC URL (default `ws://juno:6061/ws/v0_8`)
+
+`SIGNER_OPERATIONAL_ADDRESS`: The staking operational address
+
+`SIGNER_PRIVATE_KEY`: The staking signer private key (optional)
+
+`SIGNER_EXTERNAL_URL`: The staking external signer URL (optional)
+
+
+Note: One of signer private key OR external URL is required. 
+See the [Starknet Staking v2 configuration page](https://nethermindeth.github.io/starknet-staking-v2/configuration) for more details on the parameters. 
+
 
 ## Network Configuration Examples
 

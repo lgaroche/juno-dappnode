@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        UPSTREAM_VERSION: v0.15.0
-    image: juno.public.dappnode.eth:2.0.3
+        UPSTREAM_VERSION: v0.15.5
+    image: juno.public.dappnode.eth:2.0.4
     security_opt:
       - seccomp:unconfined
     ports:
@@ -21,6 +21,15 @@ services:
       EXTRA_OPTS: ""
     volumes:
       - juno_data:/var/lib/juno
+    restart: unless-stopped
+  staking:
+    image: nethermind/starknet-staking-v2
+    environment:
+      PROVIDER_HTTP_URL: http://juno:6060/rpc/v0_8
+      PROVIDER_WS_URL: ws://juno:6061/ws/v0_8
+      SIGNER_OPERATIONAL_ADDRESS: ""
+      SIGNER_PRIVATE_KEY: ""
+      SIGNER_EXTERNAL_URL: ""
     restart: unless-stopped
 
 volumes:
