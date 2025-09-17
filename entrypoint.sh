@@ -15,13 +15,11 @@ echo "Extra options: $EXTRA_OPTS"
 
 # if dir is empty and URL is configured, download the snapshot
 if [ "$(ls -A $JUNO_DIR)" ]; then
-  echo "Skipping snapshot download."
+  echo "Juno data directory is not empty, skipping snapshot download."
 elif [ -n "$SNAPSHOT_URL" ]; then
   echo "Juno data directory is empty. Downloading snapshot."
-  snapshot=mainnet.tar
-  wget --progress=dot:giga -O $snapshot $SNAPSHOT_URL
-  tar --checkpoint=65536 -xf $snapshot -C $JUNO_DIR
-  rm $snapshot
+  checkpoint_action=="echo -n \"Extracted: \" && echo \$((\$TAR_CHECKPOINT * 512 * \$TAR_BLOCKING_FACTOR)) | numfmt --to=iec-i --suffix=B"
+  curl -s -L $SNAPSHOT_URL | zstd -d | tar --checkpoint=16384 --checkpoint-action=exec="$checkpoint_action" -xf - -C $JUNO_DIR
 fi
 
 ethnode=""
@@ -36,7 +34,7 @@ fi
 wsopts=""
 if [ "$ENABLE_WS" = "true" ]; then
   echo "WebSocket interface enabled."
-  wsopts="--ws true --ws-port ${WS_PORT:-6061} --ws-host ${WS_HOST:-0.0.0.0}"
+  wsopts="--ws --ws-port ${WS_PORT:-6061} --ws-host ${WS_HOST:-0.0.0.0}"
 fi
 
 juno \

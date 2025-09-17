@@ -4,15 +4,15 @@ services:
     build:
       context: .
       args:
-        UPSTREAM_VERSION: v0.15.0-rc.4
-    image: juno.public.dappnode.eth:2.0.0
+        UPSTREAM_VERSION: v0.15.5
+    image: juno.public.dappnode.eth:2.0.4
     security_opt:
       - seccomp:unconfined
     ports:
       - "6060:6060"
       - "6061:6061"
     environment:
-      ETH_L1_RPC_URL: http://execution.mainnet.staker.dappnode:8545
+      ETH_L1_RPC_URL: ws://execution.mainnet.staker.dappnode:8546
       SNAPSHOT_URL: https://juno-snapshots.nethermind.io/files/mainnet/latest
       NETWORK: mainnet
       ENABLE_WS: true
@@ -21,6 +21,15 @@ services:
       EXTRA_OPTS: ""
     volumes:
       - juno_data:/var/lib/juno
+    restart: unless-stopped
+  staking:
+    image: nethermind/starknet-staking-v2
+    environment:
+      PROVIDER_HTTP_URL: http://juno:6060/rpc/v0_8
+      PROVIDER_WS_URL: ws://juno:6061/ws/v0_8
+      SIGNER_OPERATIONAL_ADDRESS: ""
+      SIGNER_PRIVATE_KEY: ""
+      SIGNER_EXTERNAL_URL: ""
     restart: unless-stopped
 
 volumes:

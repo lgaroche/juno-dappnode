@@ -1,7 +1,7 @@
 ARG UPSTREAM_VERSION
 FROM nethermind/juno:${UPSTREAM_VERSION}
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget \
+RUN apt-get update && apt-get install -y --no-install-recommends wget zstd \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/lib/juno
