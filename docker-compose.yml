@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
   staking:
     image: nethermind/starknet-staking-v2:v0.2.9
+    command:
+      ["--metrics", "--metrics-host", "0.0.0.0", "--metrics-port", "9090"]
     environment:
       PROVIDER_HTTP_URL: http://juno:6060/rpc/v0_10
       PROVIDER_WS_URL: ws://juno:6061/ws/v0_10

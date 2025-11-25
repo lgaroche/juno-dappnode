@@ -1,0 +1,8 @@
+scrape_configs:
+  - job_name: "juno"
+    static_configs:
+      - targets: ["juno.juno.dappnode:9090"]
+  - job_name: 'starknet-validator'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['staking.juno.dappnode:9090']
